@@ -20,6 +20,11 @@ class ViewController: NSViewController {
     @IBOutlet weak var Numbers: NSButtonCell!
     @IBOutlet weak var Uppercase: NSButtonCell!
     @IBOutlet weak var Lowercase: NSButtonCell!
+    @IBOutlet weak var Emoji: NSButton!
+    
+    @IBAction func NewPassword(_ sender: Any) {
+        update()
+    }
     
     @IBAction func OtherText(_ sender: Any) {
         update()
@@ -57,6 +62,10 @@ class ViewController: NSViewController {
         update()
     }
     
+    @IBAction func Emoji(_ sender: Any) {
+        update()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         update()
@@ -64,7 +73,7 @@ class ViewController: NSViewController {
     }
 
     func update() {
-        let pass = password(length: Int(lengthOfPassword!.intValue), specialChars: Specials.objectValue as! Bool ,vowelChars: Vowels.objectValue as! Bool, constChars: Constanants.objectValue as! Bool, numChars: Numbers.objectValue as! Bool, upperOnly: Uppercase.objectValue as! Bool, lowerOnly: Lowercase.objectValue as! Bool, extra: Other.objectValue as! Bool, Extras: OtherText.stringValue)
+        let pass = password(length: Int(lengthOfPassword!.intValue), specialChars: Specials.objectValue as! Bool ,vowelChars: Vowels.objectValue as! Bool, constChars: Constanants.objectValue as! Bool, numChars: Numbers.objectValue as! Bool, upperOnly: Uppercase.objectValue as! Bool, lowerOnly: Lowercase.objectValue as! Bool, extra: Other.objectValue as! Bool, Extras: OtherText.stringValue, emoji: Emoji.objectValue as! Bool)
         textCell.stringValue = pass
     }
     

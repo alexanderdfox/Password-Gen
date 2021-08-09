@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -54,6 +55,9 @@
                                         </menuItem>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <segue destination="B8D-0N-5wS" kind="show" id="hsb-Zd-8XN"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -65,7 +69,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="75" y="-5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -73,8 +77,7 @@
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" title="SwiftyFoxPassword" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA" userLabel="SwiftyFoxPassword">
                         <windowStyleMask key="styleMask" titled="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="625" height="162"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -86,36 +89,38 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="76" y="323"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="SwiftyFoxPassword" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="162"/>
+                        <rect key="frame" x="0.0" y="0.0" width="625" height="162"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L7e-bz-rFP">
-                                <rect key="frame" x="20" y="120" width="440" height="22"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L7e-bz-rFP">
+                                <rect key="frame" x="20" y="120" width="567" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="csl-b2-rha"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Password Here" drawsBackground="YES" id="k62-I2-6J5">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I7X-9z-Kcd">
-                                <rect key="frame" x="16" y="80" width="448" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <slider verticalHuggingPriority="750" verticalCompressionResistancePriority="749" id="I7X-9z-Kcd">
+                                <rect key="frame" x="16" y="80" width="573" height="24"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <sliderCell key="cell" state="on" alignment="left" minValue="10" maxValue="60" doubleValue="10" tickMarkPosition="below" numberOfTickMarks="10" sliderType="linear" id="26c-rQ-OJq" userLabel="Length Of Password">
                                     <connections>
                                         <action selector="lengthOfPassword:" target="XfG-lQ-9wD" id="I28-Dy-xtc"/>
                                     </connections>
                                 </sliderCell>
                             </slider>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H1m-xP-Urh">
-                                <rect key="frame" x="16" y="57" width="73" height="18"/>
+                            <button verticalHuggingPriority="750" id="H1m-xP-Urh">
+                                <rect key="frame" x="16" y="57" width="77" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Specials" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WTq-nE-pKg">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -125,8 +130,8 @@
                                     </connections>
                                 </buttonCell>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2T-1M-g2l">
-                                <rect key="frame" x="169" y="57" width="99" height="18"/>
+                            <button verticalHuggingPriority="750" id="Y2T-1M-g2l">
+                                <rect key="frame" x="177" y="57" width="103" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Constanants" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Pdt-l0-r4R">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -136,8 +141,8 @@
                                     </connections>
                                 </buttonCell>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N2j-qa-9c6">
-                                <rect key="frame" x="276" y="57" width="78" height="18"/>
+                            <button verticalHuggingPriority="750" id="N2j-qa-9c6">
+                                <rect key="frame" x="286" y="57" width="82" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Numbers" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cLf-Yl-ozb">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -147,8 +152,8 @@
                                     </connections>
                                 </buttonCell>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8rj-WY-qJj">
-                                <rect key="frame" x="374" y="57" width="88" height="18"/>
+                            <button verticalHuggingPriority="750" id="8rj-WY-qJj">
+                                <rect key="frame" x="388" y="57" width="92" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Uppercase" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="BmY-YF-m8q">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -158,11 +163,22 @@
                                     </connections>
                                 </buttonCell>
                             </button>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="65E-fh-023">
-                                <rect key="frame" x="79" y="12" width="289" height="22"/>
+                            <button verticalHuggingPriority="750" id="tac-hF-qFn">
+                                <rect key="frame" x="499" y="57" width="66" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Emojis" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="pe0-jk-dL3">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="Emoji:" target="XfG-lQ-9wD" id="Eug-es-UNg"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" id="65E-fh-023">
+                                <rect key="frame" x="81" y="12" width="289" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Insert Other Characters Here" drawsBackground="YES" id="RYJ-BT-Q9d">
-                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -170,19 +186,8 @@
                                     <action selector="OtherText:" target="XfG-lQ-9wD" id="EIG-N7-2Cj"/>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXb-cR-8Py">
-                                <rect key="frame" x="16" y="14" width="57" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Other" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vh7-Th-olM">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <connections>
-                                        <action selector="Other:" target="XfG-lQ-9wD" id="Hcg-db-vbE"/>
-                                    </connections>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rds-Pl-Mpf">
-                                <rect key="frame" x="93" y="57" width="65" height="18"/>
+                            <button verticalHuggingPriority="750" id="Rds-Pl-Mpf">
+                                <rect key="frame" x="97" y="57" width="69" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Vowels" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Un2-SU-zo8">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -192,8 +197,8 @@
                                     </connections>
                                 </buttonCell>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbJ-NN-yoN">
-                                <rect key="frame" x="374" y="14" width="87" height="18"/>
+                            <button verticalHuggingPriority="750" id="kbJ-NN-yoN">
+                                <rect key="frame" x="388" y="14" width="92" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Lowercase" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cGA-7b-Ybw">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -203,10 +208,50 @@
                                     </connections>
                                 </buttonCell>
                             </button>
+                            <button verticalHuggingPriority="750" id="gSV-a8-IV8">
+                                <rect key="frame" x="480" y="6" width="124" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="New Password" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xpw-Yt-fjI">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="NewPassword:" target="XfG-lQ-9wD" id="edF-Pw-0ys"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" ambiguous="YES" id="lXb-cR-8Py">
+                                <rect key="frame" x="16" y="14" width="61" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Other" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vh7-Th-olM">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="Other:" target="XfG-lQ-9wD" id="Hcg-db-vbE"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="L7e-bz-rFP" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="19l-Qs-Lbl"/>
+                            <constraint firstAttribute="trailing" secondItem="L7e-bz-rFP" secondAttribute="trailing" constant="38" id="36K-oJ-KEB"/>
+                            <constraint firstItem="I7X-9z-Kcd" firstAttribute="top" secondItem="L7e-bz-rFP" secondAttribute="bottom" constant="18" id="7vL-HB-GYh"/>
+                            <constraint firstItem="H1m-xP-Urh" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="18" id="C3N-eY-vS3"/>
+                            <constraint firstAttribute="bottom" secondItem="L7e-bz-rFP" secondAttribute="bottom" constant="120" id="DJW-Jh-fgk"/>
+                            <constraint firstItem="65E-fh-023" firstAttribute="baseline" secondItem="lXb-cR-8Py" secondAttribute="baseline" id="Deo-RQ-7W6"/>
+                            <constraint firstAttribute="trailing" secondItem="tac-hF-qFn" secondAttribute="trailing" constant="60" id="FuR-Ll-rEu"/>
+                            <constraint firstAttribute="bottom" secondItem="8rj-WY-qJj" secondAttribute="bottom" constant="58" id="P2o-d3-G5s"/>
+                            <constraint firstItem="kbJ-NN-yoN" firstAttribute="top" secondItem="8rj-WY-qJj" secondAttribute="bottom" constant="27" id="S1l-Yu-84g"/>
+                            <constraint firstItem="8rj-WY-qJj" firstAttribute="top" secondItem="I7X-9z-Kcd" secondAttribute="bottom" constant="12" id="UOd-vT-bRQ"/>
+                            <constraint firstItem="lXb-cR-8Py" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="14" id="ZLn-w5-meu"/>
+                            <constraint firstItem="I7X-9z-Kcd" firstAttribute="leading" secondItem="H1m-xP-Urh" secondAttribute="leading" id="iRS-vJ-0LD"/>
+                            <constraint firstItem="65E-fh-023" firstAttribute="baseline" secondItem="lXb-cR-8Py" secondAttribute="firstBaseline" id="jjo-ig-y0k"/>
+                            <constraint firstAttribute="trailing" secondItem="gSV-a8-IV8" secondAttribute="trailing" constant="28" id="tUW-Ol-IIa"/>
+                            <constraint firstItem="L7e-bz-rFP" firstAttribute="trailing" secondItem="I7X-9z-Kcd" secondAttribute="trailing" id="us6-qd-csa"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="Constanants" destination="Pdt-l0-r4R" id="ROi-De-Ncq"/>
+                        <outlet property="Emoji" destination="tac-hF-qFn" id="5Ye-aF-ueK"/>
                         <outlet property="Lowercase" destination="cGA-7b-Ybw" id="2dw-V5-zI6"/>
                         <outlet property="Numbers" destination="cLf-Yl-ozb" id="AeF-9h-zPw"/>
                         <outlet property="Other" destination="vh7-Th-olM" id="osv-sL-2Fm"/>
@@ -221,7 +266,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="601"/>
+            <point key="canvasLocation" x="76" y="697"/>
         </scene>
     </scenes>
 </document>
