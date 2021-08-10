@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var Length = 20.0
     @State private var Vowels = true
     @State private var Emojis = false
-    @State private var Constanants = true
+    @State private var Consonants = true
     @State private var Numbers = true
     @State private var Lowercase = true
     @State private var Uppercase = true
@@ -30,7 +30,7 @@ struct ContentView: View {
                     Text("🦊").font(.system(size: 150.0)).padding(10.0)
                     HStack(alignment: .top, spacing: .some(15.0), content: {
                         Toggle("Vowels", isOn: $Vowels).accentColor(.orange).foregroundColor(.black).padding(5.0).background(randColor()).clipShape(RoundedRectangle(cornerRadius:5))
-                        Toggle("Constanants", isOn: $Constanants).accentColor(.orange).foregroundColor(.black).padding(5.0).background(randColor()).clipShape(RoundedRectangle(cornerRadius:5))
+                        Toggle("Consonants", isOn: $Consonants).accentColor(.orange).foregroundColor(.black).padding(5.0).background(randColor()).clipShape(RoundedRectangle(cornerRadius:5))
                     }).clipShape(RoundedRectangle(cornerRadius:5))
                     HStack(alignment: .top, spacing: .some(15.0), content: {
                         Toggle("Lowercase", isOn: $Lowercase).accentColor(.orange).foregroundColor(.black).padding(5.0).background(randColor()).clipShape(RoundedRectangle(cornerRadius:5))
@@ -61,7 +61,7 @@ struct ContentView: View {
     }
     
     func update() {
-        let pass = password(length: Int(Length), specialChars: Specials,vowelChars: Vowels, constChars: Constanants, numChars: Numbers, upperOnly: Uppercase, lowerOnly: Lowercase, extra: Other, Extras: Extras, emoji: Emojis)
+        let pass = password(length: Int(Length), specialChars: Specials,vowelChars: Vowels, constChars: Consonants, numChars: Numbers, upperOnly: Uppercase, lowerOnly: Lowercase, extra: Other, Extras: Extras, emoji: Emojis)
         Password = pass
         UIPasteboard.general.string = Password
     }

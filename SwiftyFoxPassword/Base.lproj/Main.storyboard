@@ -131,9 +131,9 @@
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" id="Y2T-1M-g2l">
-                                <rect key="frame" x="177" y="57" width="103" height="18"/>
+                                <rect key="frame" x="177" y="57" width="99" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Constanants" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Pdt-l0-r4R">
+                                <buttonCell key="cell" type="check" title="Consonants" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Pdt-l0-r4R">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <connections>

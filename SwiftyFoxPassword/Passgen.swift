@@ -74,35 +74,35 @@ func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Boo
     
     let emojis = emojis()
     let numbers = "0123456789"
-    let constanants = "bcdfghjklmnpqrstvwxyz"
+    let consonants = "bcdfghjklmnpqrstvwxyz"
     let vowels = "aeiouy"
     let specials = "!#$&*-_."
 
-    var all = specials + vowels + constanants + numbers + emojis
-    var ncve = numbers + constanants + vowels + emojis
-    var cnse = constanants + numbers + specials + emojis
+    var all = specials + vowels + consonants + numbers + emojis
+    var ncve = numbers + consonants + vowels + emojis
+    var cnse = consonants + numbers + specials + emojis
     var vnse = vowels + numbers + specials + emojis
-    var vcse = vowels + constanants + specials + emojis
-    var vce = vowels + constanants + emojis
+    var vcse = vowels + consonants + specials + emojis
+    var vce = vowels + consonants + emojis
     var vse = vowels + specials + emojis
-    var nce = numbers + constanants + emojis
+    var nce = numbers + consonants + emojis
     var nse = numbers + specials + emojis
-    var cse = constanants + specials + emojis
+    var cse = consonants + specials + emojis
     var vne = vowels + numbers + emojis
-    var svcn = specials + vowels + constanants + numbers
-    var ncv = numbers + constanants + vowels
-    var cns = constanants + numbers + specials
+    var svcn = specials + vowels + consonants + numbers
+    var ncv = numbers + consonants + vowels
+    var cns = consonants + numbers + specials
     var vns = vowels + numbers + specials
-    var vcs = vowels + constanants + specials
-    var vc = vowels + constanants
+    var vcs = vowels + consonants + specials
+    var vc = vowels + consonants
     var vs = vowels + specials
-    var nc = numbers + constanants
+    var nc = numbers + consonants
     var ns = numbers + specials
-    var cs = constanants + specials
+    var cs = consonants + specials
     var vn = vowels + numbers
     var ne = numbers + emojis
     var ve = vowels + emojis
-    var ce = constanants + emojis
+    var ce = consonants + emojis
     var se = specials + emojis
     
     var theChar:String = ""
@@ -140,7 +140,7 @@ func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Boo
     let E = emojis.index(emojis.startIndex, offsetBy: Int(arc4random_uniform(UInt32(emojis.count))))
     let N = numbers.index(numbers.startIndex, offsetBy: Int(arc4random_uniform(UInt32(numbers.count))))
     let V = vowels.index(vowels.startIndex, offsetBy: Int(arc4random_uniform(UInt32(vowels.count))))
-    let C = constanants.index(constanants.startIndex, offsetBy: Int(arc4random_uniform(UInt32(constanants.count))))
+    let C = consonants.index(consonants.startIndex, offsetBy: Int(arc4random_uniform(UInt32(consonants.count))))
     let S = specials.index(specials.startIndex, offsetBy: Int(arc4random_uniform(UInt32(specials.count))))
     let NE = ne.index(ne.startIndex, offsetBy: Int(arc4random_uniform(UInt32(ne.count))))
     let VE = ve.index(ve.startIndex, offsetBy: Int(arc4random_uniform(UInt32(ve.count))))
@@ -181,7 +181,7 @@ func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Boo
         theChar = String(vowels[V])
     }
     else if (!specialChars && !vowelChars && constChars && !numChars && !emoji) {
-        theChar = String(constanants[C])
+        theChar = String(consonants[C])
     }
     else if (specialChars && !vowelChars && !constChars && !numChars && !emoji) {
         theChar = String(specials[S])
