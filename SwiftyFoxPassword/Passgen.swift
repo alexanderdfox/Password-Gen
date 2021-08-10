@@ -1,4 +1,4 @@
-import Cocoa
+import SwiftUI
 
 func password( length:Int,  specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Bool,  upperOnly:Bool,  lowerOnly:Bool, extra:Bool, Extras:String, emoji: Bool) -> String {
     
