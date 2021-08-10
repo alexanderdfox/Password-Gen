@@ -1,3 +1,11 @@
+//
+//  Passgen.swift
+//  SwiftyFoxPassword
+//
+//  Created by Alexander Fox on 8/9/21.
+//  Copyright © 2021 Alexander Fox. All rights reserved.
+//
+
 import SwiftUI
 
 func password( length:Int,  specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Bool,  upperOnly:Bool,  lowerOnly:Bool, extra:Bool, Extras:String, emoji: Bool) -> String {
