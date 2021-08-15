@@ -80,11 +80,11 @@ func emojis() -> String {
 
 func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Bool, extra:Bool, Extras:String, emoji:Bool) -> String {
     
-    let emojis = emojis()
-    let numbers = "0123456789"
-    let consonants = "bcdfghjklmnpqrstvwxyz"
-    let vowels = "aeiouy"
-    let specials = "!#$&*-_."
+    var emojis = emojis()
+    var numbers = "0123456789"
+    var consonants = "bcdfghjklmnpqrstvwxyz"
+    var vowels = "aeiouy"
+    var specials = "!#$&*-_."
 
     var all = specials + vowels + consonants + numbers + emojis
     var ncve = numbers + consonants + vowels + emojis
@@ -142,6 +142,11 @@ func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Boo
         ve += Extras
         ce += Extras
         se += Extras
+        emojis += Extras
+        numbers += Extras
+        consonants += Extras
+        vowels += Extras
+        specials += Extras
     }
     
     let A = all.index(all.startIndex, offsetBy: Int(arc4random_uniform(UInt32(all.count))))
@@ -175,6 +180,7 @@ func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Boo
     let VNSE = vnse.index(vnse.startIndex, offsetBy: Int(arc4random_uniform(UInt32(vnse.count))))
     let VCSE = vcse.index(vce.startIndex, offsetBy: Int(arc4random_uniform(UInt32(vcse.count))))
     let SVCN = svcn.index(svcn.startIndex, offsetBy: Int(arc4random_uniform(UInt32(svcn.count))))
+    let EXTRAS = Extras.index(Extras.startIndex, offsetBy: Int(arc4random_uniform(UInt32(Extras.count))))
     
     if (specialChars && vowelChars && constChars && numChars && emoji) {
         theChar = String(all[A])
@@ -268,6 +274,9 @@ func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Boo
     }
     else if (specialChars && vowelChars && constChars && numChars && !emoji) {
         theChar = String(svcn[SVCN])
+    }
+    else if (!specialChars && !vowelChars && !constChars && !numChars && !emoji && extra && !Extras.isEmpty) {
+        theChar = String(Extras[EXTRAS])
     }
     else {
         theChar = ""
