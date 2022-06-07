@@ -27,6 +27,9 @@ struct ContentView_Previews: PreviewProvider {
 
 struct cryptView: View {
     
+    @State private var emojiList = emojis().prefix(65)
+    @State private var base64List = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+    @State private var emojiBool = true
     @State private var toCrypt = ""
     @State private var toDecrypt = ""
     @State private var key = ""
@@ -48,10 +51,11 @@ struct cryptView: View {
                     Text("Key:").padding(5.0).foregroundColor(.black).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
                     TextField("Key", text: $key).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
                 })
-                Button(action: {cryptUpdate()}, label: {
+                Toggle("Emojis:", isOn: $emojiBool).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
+                Button(action: {cryptUpdate(emojiBool: emojiBool)}, label: {
                     Text("Encrypt").accentColor(.orange).foregroundColor(.white).padding(5.0)
                 }).background(Color.pink).clipShape(RoundedRectangle(cornerRadius:5))
-                Button(action: {dcryptUpdate()}, label: {
+                Button(action: {dcryptUpdate(emojiBool: emojiBool)}, label: {
                     Text("Decrypt").accentColor(.orange).foregroundColor(.white).padding(5.0)
                 }).background(Color.blue).clipShape(RoundedRectangle(cornerRadius:5))
             })
@@ -59,16 +63,65 @@ struct cryptView: View {
         }
     }
     
-    func cryptUpdate() {
-        let crypted = crypt(input:toCrypt)
-        toDecrypt = (crypted[0] as! Data).base64EncodedString()
-        key = (crypted[1] as! Data).base64EncodedString()
+    func cryptUpdate(emojiBool: Bool) {
+        let emojiMap = zip(base64List, emojiList).map { [String($0), String($1)] }
+        if emojiBool {
+            let crypted = crypt(input:toCrypt)
+            toDecrypt = (crypted[0] as! Data).base64EncodedString()
+            key = (crypted[1] as! Data).base64EncodedString()
+            var tempkey  = ""
+            for k in key {
+                for emoji in emojiMap.enumerated() {
+                    if String(k) == emojiMap[emoji.offset][0] {
+                        tempkey += emojiMap[emoji.offset][1]
+                    }
+                }
+            }
+            key = tempkey
+            var tempDecrypt  = ""
+            for k in toDecrypt {
+                for emoji in emojiMap.enumerated() {
+                    if String(k) == emojiMap[emoji.offset][0] {
+                        tempDecrypt += emojiMap[emoji.offset][1]
+                    }
+                }
+            }
+            toDecrypt = tempDecrypt
+        }
+        else {
+            let crypted = crypt(input:toCrypt)
+            toDecrypt = (crypted[0] as! Data).base64EncodedString()
+            key = (crypted[1] as! Data).base64EncodedString()
+        }
     }
     
-    func dcryptUpdate() {
+    func dcryptUpdate(emojiBool: Bool) {
+        let emojiMap = zip(emojiList, base64List).map { [String($0), String($1)] }
         if key != "" && toDecrypt != "" {
-            let Dcrypted = dcrypt(input: Data(base64Encoded: toDecrypt)!, key: SymmetricKey(data: Data(base64Encoded: key)!))
-            toCrypt = String(decoding: Dcrypted, as: UTF8.self)
+            if emojiBool {
+                var tempkey  = ""
+                for k in key {
+                    for emoji in emojiMap.enumerated() {
+                        if String(k) == emojiMap[emoji.offset][0] {
+                            tempkey += emojiMap[emoji.offset][1]
+                        }
+                    }
+                }
+                var tempDecrypt  = ""
+                for k in toDecrypt {
+                    for emoji in emojiMap.enumerated() {
+                        if String(k) == emojiMap[emoji.offset][0] {
+                            tempDecrypt += emojiMap[emoji.offset][1]
+                        }
+                    }
+                }
+                let Dcrypted = dcrypt(input: Data(base64Encoded: tempDecrypt)!, key: SymmetricKey(data: Data(base64Encoded: tempkey)!))
+                toCrypt = String(decoding: Dcrypted, as: UTF8.self)
+            }
+            else {
+                let Dcrypted = dcrypt(input: Data(base64Encoded: toDecrypt)!, key: SymmetricKey(data: Data(base64Encoded: key)!))
+                toCrypt = String(decoding: Dcrypted, as: UTF8.self)
+            }
         }
     }
 }

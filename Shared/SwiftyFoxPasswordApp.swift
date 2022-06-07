@@ -14,7 +14,7 @@ struct SwiftyFoxPasswordApp: App {
         #if os(macOS)
         WindowGroup {
             ContentView()
-                .frame(width: 600, height: 600, alignment: .center)
+                .frame(width: 1000, height: 1000, alignment: .center)
         }
         #elseif os(iOS)
         WindowGroup {
