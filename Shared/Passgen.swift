@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CryptoKit
 
 func password( length:Int,  specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Bool,  upperOnly:Bool,  lowerOnly:Bool, extra:Bool, Extras:String, emoji: Bool) -> String {
     
@@ -283,5 +284,20 @@ func getChar( specialChars:Bool, vowelChars:Bool, constChars:Bool,  numChars:Boo
     }
     
     return theChar
+}
+
+func crypt(input: String) -> Array<Any> {
+    let data = input.data(using: .utf8)
+    let key = SymmetricKey(size: .bits256)
+    let encryptdData = try! ChaChaPoly.seal(data!, using: key).combined
+    let keyData = key.withUnsafeBytes { return Data(Array($0)) }
     
+    return [encryptdData, keyData]
+}
+
+func dcrypt(input: Data, key: SymmetricKey) -> Data {
+    let sealedBox = try! ChaChaPoly.SealedBox(combined: input)
+    let decryptedData = try! ChaChaPoly.open(sealedBox, using: key)
+    
+    return decryptedData
 }
