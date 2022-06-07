@@ -10,11 +10,11 @@ import SwiftUI
 import CryptoKit
 
 struct ContentView: View {
-    
+
     var body: some View {
         TabView() {
-            passwordView().tabItem {Text("Password")}.background(Color.green)
-            cryptView().tabItem {Text("Cryptography")}.background(Color.orange)
+            passwordView().tabItem {Text("Password")}.background(Color.green).edgesIgnoringSafeArea(.all)
+            cryptView().tabItem {Text("Cryptography")}.background(Color.orange).edgesIgnoringSafeArea(.all)
         }
     }
 }
@@ -64,8 +64,10 @@ struct cryptView: View {
     }
     
     func dcryptUpdate() {
-        let Dcrypted = dcrypt(input: Data(base64Encoded: toDecrypt)!, key: SymmetricKey(data: Data(base64Encoded: key)!))
-        toCrypt = String(decoding: Dcrypted, as: UTF8.self)
+        if key != "" && toDecrypt != "" {
+            let Dcrypted = dcrypt(input: Data(base64Encoded: toDecrypt)!, key: SymmetricKey(data: Data(base64Encoded: key)!))
+            toCrypt = String(decoding: Dcrypted, as: UTF8.self)
+        }
     }
 }
 
