@@ -10,14 +10,14 @@ import SwiftUI
 import CryptoKit
 
 struct ContentView: View {
-
     var body: some View {
-        TabView() {
-            passwordView().tabItem {Text("Password")}.background(Color.green).edgesIgnoringSafeArea(.all)
-            cryptView().tabItem {Text("Cryptography")}.background(Color.orange).edgesIgnoringSafeArea(.all)
+        TabView {
+            passwordView().tabItem {Text("Password")}.background(Color.green).ignoresSafeArea(.all)
+            cryptView().tabItem {Text("Cryptography")}.background(Color.orange).ignoresSafeArea(.all)
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -32,27 +32,29 @@ struct cryptView: View {
     @State private var key = ""
     
     var body: some View {
-        ZStack {
-            VStack(alignment: .center, spacing: .some(15.0), content: {
+        ScrollView {
+            HStack(alignment: .center, spacing: .zero, content: {
+                VStack(alignment: .center, spacing: .zero, content: {
                 Link("🦊", destination: URL(string:"https://www.alexdfox.com/")!).font(.system(size: 150.0)).padding(10.0)
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Text("Message:").padding(5.0).foregroundColor(.black).background(Color.green)
-                    TextField("Message to Encrypt", text: $toCrypt).accentColor(.orange).foregroundColor(.black).padding(5.0).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5))
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Text("Encrypted:").padding(5.0).foregroundColor(.black).background(Color.yellow)
-                    TextField("Message to Decrypt", text: $toDecrypt).accentColor(.orange).foregroundColor(.black).padding(5.0).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5))
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Text("Key:").padding(5.0).foregroundColor(.black).background(Color.red)
-                    TextField("Key", text: $key).accentColor(.orange).foregroundColor(.black).padding(5.0).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5))
+                VStack(alignment: .center, spacing: .some(15.0), content: {
+                    Text("Message:").padding(5.0).foregroundColor(.black).background(Color.green).clipShape(RoundedRectangle(cornerRadius:5))
+                    TextField("Message to Encrypt", text: $toCrypt).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
+                })
+                VStack(alignment: .center, spacing: .some(15.0), content: {
+                    Text("Encrypted:").padding(5.0).foregroundColor(.black).background(Color.yellow).clipShape(RoundedRectangle(cornerRadius:5))
+                    TextField("Message to Decrypt", text: $toDecrypt).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
+                })
+                VStack(alignment: .center, spacing: .some(15.0), content: {
+                    Text("Key:").padding(5.0).foregroundColor(.black).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
+                    TextField("Key", text: $key).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
+                })
                 Button(action: {cryptUpdate()}, label: {
                     Text("Encrypt").accentColor(.orange).foregroundColor(.white).padding(5.0)
                 }).background(Color.pink).clipShape(RoundedRectangle(cornerRadius:5))
                 Button(action: {dcryptUpdate()}, label: {
                     Text("Decrypt").accentColor(.orange).foregroundColor(.white).padding(5.0)
                 }).background(Color.blue).clipShape(RoundedRectangle(cornerRadius:5))
+            })
             })
         }
     }
@@ -86,8 +88,8 @@ struct passwordView: View {
     @State private var Extras = ""
     
     var body: some View {
-        ZStack {
-            VStack(alignment: .center, spacing: .some(15.0), content: {
+        ScrollView {
+        VStack(alignment: .center, spacing: .zero, content: {
                 Link("🦊", destination: URL(string:"https://www.alexdfox.com/")!).font(.system(size: 150.0)).padding(10.0)
                 HStack(alignment: .top, spacing: .some(15.0), content: {
                     Toggle("Vowels", isOn: $Vowels).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.blue).clipShape(RoundedRectangle(cornerRadius:5))
@@ -118,8 +120,10 @@ struct passwordView: View {
                     Text("New Password").accentColor(.orange).foregroundColor(.white).padding(5.0)
                 }).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
                 TextField("Password: ", text: $Password).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
-            })
+        })
         }
+        
+        
     }
     
     func update() {
