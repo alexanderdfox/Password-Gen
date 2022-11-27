@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var Length = 20.0
+    @State private var Length = 12.0
     @State private var Vowels = true
     @State private var Emojis = false
     @State private var Consonants = true
