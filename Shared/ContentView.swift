@@ -63,6 +63,39 @@ struct cryptView: View {
         }
     }
     
+    func cryptUpdatePowerOf(power: Int64, emojiBool: Bool) {
+        let emojiMap = zip(base64List, emojiList).map { [String($0), String($1)] }
+        if emojiBool {
+            let crypted = emctothepowerof(power:power, input:toCrypt)
+            let crypt = crypted[crypted.count] as! Array<Any>
+            toDecrypt = (crypt[0] as! Data).base64EncodedString()
+            key = (crypt[1] as! Data).base64EncodedString()
+            var tempkey  = ""
+            for k in key {
+                for emoji in emojiMap.enumerated() {
+                    if String(k) == emojiMap[emoji.offset][0] {
+                        tempkey += emojiMap[emoji.offset][1]
+                    }
+                }
+            }
+            key = tempkey
+            var tempDecrypt  = ""
+            for k in toDecrypt {
+                for emoji in emojiMap.enumerated() {
+                    if String(k) == emojiMap[emoji.offset][0] {
+                        tempDecrypt += emojiMap[emoji.offset][1]
+                    }
+                }
+            }
+            toDecrypt = tempDecrypt
+        }
+        else {
+            let crypted = crypt(input:toCrypt)
+            toDecrypt = (crypted[0] as! Data).base64EncodedString()
+            key = (crypted[1] as! Data).base64EncodedString()
+        }
+    }
+    
     func cryptUpdate(emojiBool: Bool) {
         let emojiMap = zip(base64List, emojiList).map { [String($0), String($1)] }
         if emojiBool {

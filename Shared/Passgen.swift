@@ -301,3 +301,17 @@ func dcrypt(input: Data, key: SymmetricKey) -> Data {
     
     return decryptedData
 }
+
+func emctothepowerof(power: Int64, input: String) -> Array<Any> {
+    let message = input.data(using: .utf8)
+    var array = Array<Any>()
+    for _ in 0...power {
+        let key = SymmetricKey(size: .bits256)
+        let cipher = try! ChaChaPoly.seal(message!, using: key).combined
+        let keyData = key.withUnsafeBytes { return Data(Array($0)) }
+        let a: Array<Any> = [cipher, keyData]
+        array.append(a)
+    }
+    
+    return array
+}
