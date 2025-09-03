@@ -1,0 +1,15 @@
+{
+  "" : {
+    "const-values" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/SwiftyFoxPasswordWatchOS Watch App-master.swiftconstvalues",
+    "dependencies" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/SwiftyFoxPasswordWatchOS Watch App-master.d",
+    "diagnostics" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/SwiftyFoxPasswordWatchOS Watch App-master.dia",
+    "emit-module-dependencies" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/SwiftyFoxPasswordWatchOS Watch App-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/SwiftyFoxPasswordWatchOS Watch App-master-emit-module.dia",
+    "swift-dependencies" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/SwiftyFoxPasswordWatchOS Watch App-master.swiftdeps"
+  },
+  "/Users/alexanderfox/Projects/Password-Gen/Shared/Passgen.swift" : {
+    "index-unit-output-path" : "/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/Passgen.o",
+    "llvm-bc" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/Passgen.bc",
+    "object" : "/Users/alexanderfox/Projects/Password-Gen/build/SwiftyFoxPassword.build/Release-watchos/SwiftyFoxPasswordWatchOS Watch App.build/Objects-normal/arm64_32/Passgen.o"
+  }
+}

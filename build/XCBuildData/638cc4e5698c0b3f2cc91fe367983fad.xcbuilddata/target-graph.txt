@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'SwiftyFoxPassword (iOS)' in project 'SwiftyFoxPassword'
+➜ Explicit dependency on target 'SwiftyFoxPasswordWatchOS Watch App' in project 'SwiftyFoxPassword'
+Target 'SwiftyFoxPasswordWatchOS Watch App' in project 'SwiftyFoxPassword' (no dependencies)
