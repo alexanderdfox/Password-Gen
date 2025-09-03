@@ -73,8 +73,55 @@ class ViewController: NSViewController {
     }
 
     func update() {
-        let pass = password(length: Int(lengthOfPassword!.intValue), specialChars: Specials.objectValue as! Bool ,vowelChars: Vowels.objectValue as! Bool, constChars: Constanants.objectValue as! Bool, numChars: Numbers.objectValue as! Bool, upperOnly: Uppercase.objectValue as! Bool, lowerOnly: Lowercase.objectValue as! Bool, extra: Other.objectValue as! Bool, Extras: OtherText.stringValue, emoji: Emoji.objectValue as! Bool)
-        textCell.stringValue = pass
+        // Input validation and safe unwrapping
+        guard let lengthValue = lengthOfPassword?.intValue,
+              let specialsValue = Specials?.objectValue as? Bool,
+              let vowelsValue = Vowels?.objectValue as? Bool,
+              let consonantsValue = Constanants?.objectValue as? Bool,
+              let numbersValue = Numbers?.objectValue as? Bool,
+              let uppercaseValue = Uppercase?.objectValue as? Bool,
+              let lowercaseValue = Lowercase?.objectValue as? Bool,
+              let otherValue = Other?.objectValue as? Bool,
+              let emojiValue = Emoji?.objectValue as? Bool else {
+            // Set default values if any controls are nil
+            textCell?.stringValue = "Error: Invalid configuration"
+            return
+        }
+        
+        // Validate length
+        let length = Int(lengthValue)
+        guard length >= 1 && length <= 1000 else {
+            textCell?.stringValue = "Error: Invalid password length"
+            return
+        }
+        
+        // Validate that at least one character type is selected
+        guard specialsValue || vowelsValue || consonantsValue || numbersValue || uppercaseValue || lowercaseValue || emojiValue || otherValue else {
+            textCell?.stringValue = "Error: Please select at least one character type"
+            return
+        }
+        
+        // Safely get the extras text
+        let extrasText = OtherText?.stringValue ?? ""
+        
+        let pass = password(length: length, 
+                          specialChars: specialsValue,
+                          vowelChars: vowelsValue, 
+                          constChars: consonantsValue, 
+                          numChars: numbersValue, 
+                          upperOnly: uppercaseValue, 
+                          lowerOnly: lowercaseValue, 
+                          extra: otherValue, 
+                          Extras: extrasText, 
+                          emoji: emojiValue)
+        
+        // Validate the generated password
+        guard !pass.isEmpty else {
+            textCell?.stringValue = "Error: Failed to generate password"
+            return
+        }
+        
+        textCell?.stringValue = pass
     }
     
     override var representedObject: Any? {

@@ -14,11 +14,17 @@ struct SwiftyFoxPasswordApp: App {
         #if os(macOS)
         WindowGroup {
             ContentView()
-                .frame(width: 1000, height: 1000, alignment: .center)
+                .frame(minWidth: 800, idealWidth: 1000, minHeight: 600, idealHeight: 700)
+                .background(Color(.windowBackgroundColor))
         }
+        #if os(macOS)
+        .windowStyle(HiddenTitleBarWindowStyle())
+        .windowResizability(.contentSize)
+        #endif
         #elseif os(iOS)
         WindowGroup {
             ContentView()
+                .preferredColorScheme(.light)
         }
         #endif
     }

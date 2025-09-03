@@ -12,12 +12,21 @@ import CryptoKit
 struct ContentView: View {
     var body: some View {
         TabView {
-            passwordView().tabItem {Text("Password")}.background(Color.green).ignoresSafeArea(.all)
-            cryptView().tabItem {Text("Cryptography")}.background(Color.orange).ignoresSafeArea(.all)
+            PasswordGeneratorView()
+                .tabItem {
+                    Image(systemName: "key.fill")
+                    Text("Password Generator")
+                }
+            
+            CryptographyView()
+                .tabItem {
+                    Image(systemName: "lock.shield.fill")
+                    Text("Encryption")
+                }
         }
+        .accentColor(.blue)
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -25,51 +34,182 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct cryptView: View {
-    
+struct CryptographyView: View {
     @State private var emojiList = emojis().prefix(65)
     @State private var base64List = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
     @State private var emojiBool = true
     @State private var toCrypt = ""
     @State private var toDecrypt = ""
     @State private var key = ""
+    @State private var errorMessage = ""
+    @State private var showError = false
     
     var body: some View {
         ScrollView {
-            HStack(alignment: .center, spacing: .zero, content: {
-                VStack(alignment: .center, spacing: .zero, content: {
-                Link("🦊", destination: URL(string:"https://www.alexdfox.com/")!).font(.system(size: 150.0)).padding(10.0)
-                VStack(alignment: .center, spacing: .some(15.0), content: {
-                    Text("Message:").padding(5.0).foregroundColor(.black).background(Color.green).clipShape(RoundedRectangle(cornerRadius:5))
-                    TextField("Message to Encrypt", text: $toCrypt).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
-                })
-                VStack(alignment: .center, spacing: .some(15.0), content: {
-                    Text("Encrypted:").padding(5.0).foregroundColor(.black).background(Color.yellow).clipShape(RoundedRectangle(cornerRadius:5))
-                    TextField("Message to Decrypt", text: $toDecrypt).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
-                })
-                VStack(alignment: .center, spacing: .some(15.0), content: {
-                    Text("Key:").padding(5.0).foregroundColor(.black).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
-                    TextField("Key", text: $key).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
-                })
-                Toggle("Emojis:", isOn: $emojiBool).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
-                Button(action: {cryptUpdate(emojiBool: emojiBool)}, label: {
-                    Text("Encrypt").accentColor(.orange).foregroundColor(.white).padding(5.0)
-                }).background(Color.pink).clipShape(RoundedRectangle(cornerRadius:5))
-                Button(action: {dcryptUpdate(emojiBool: emojiBool)}, label: {
-                    Text("Decrypt").accentColor(.orange).foregroundColor(.white).padding(5.0)
-                }).background(Color.blue).clipShape(RoundedRectangle(cornerRadius:5))
-            })
-            })
+            VStack(spacing: 32) {
+                // Header
+                VStack(spacing: 16) {
+                    HStack {
+                        Image(systemName: "lock.shield.fill")
+                            .font(.system(size: 48))
+                            .foregroundColor(.blue)
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Secure Encryption")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            Text("Encrypt and decrypt messages with military-grade security")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                    }
+                    .padding(24)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(16)
+                }
+                
+                // Main Content Area
+                HStack(alignment: .top, spacing: 32) {
+                    // Left Column - Input
+                    VStack(spacing: 24) {
+                        // Input Section
+                        VStack(spacing: 16) {
+                            Text("Message to Encrypt")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            TextField("Enter your message here...", text: $toCrypt)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(minHeight: 100)
+                        }
+                        
+                        // Options Section
+                        VStack(spacing: 16) {
+                            HStack {
+                                Toggle("Use Emoji Encoding", isOn: $emojiBool)
+                                    .toggleStyle(SwitchToggleStyle(tint: .blue))
+                                Spacer()
+                            }
+                            .padding(16)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(12)
+                        }
+                        
+                        // Action Buttons
+                        HStack(spacing: 16) {
+                            Button(action: { cryptUpdate(emojiBool: emojiBool) }) {
+                                HStack {
+                                    Image(systemName: "lock.fill")
+                                    Text("Encrypt")
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(16)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(12)
+                            }
+                            
+                            Button(action: { dcryptUpdate(emojiBool: emojiBool) }) {
+                                HStack {
+                                    Image(systemName: "lock.open.fill")
+                                    Text("Decrypt")
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(16)
+                                .background(Color.green)
+                                .foregroundColor(.white)
+                                .cornerRadius(12)
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    
+                    // Right Column - Output
+                    VStack(spacing: 24) {
+                        // Output Section
+                        VStack(spacing: 16) {
+                            Text("Encrypted Message")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            TextField("Encrypted output will appear here", text: $toDecrypt)
+                                .textFieldStyle(.roundedBorder)
+                                .disabled(true)
+                                .frame(minHeight: 100)
+                        }
+                        
+                        // Key Section
+                        VStack(spacing: 16) {
+                            Text("Encryption Key")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            TextField("Key will be generated automatically", text: $key)
+                                .textFieldStyle(.roundedBorder)
+                                .disabled(true)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                
+                // Error Display
+                if showError {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.orange)
+                        Text(errorMessage)
+                            .foregroundColor(.primary)
+                        Spacer()
+                    }
+                    .padding(16)
+                    .background(Color.orange.opacity(0.1))
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.orange, lineWidth: 1)
+                    )
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            showError = false
+                        }
+                    }
+                }
+                
+                Spacer(minLength: 40)
+            }
+            .padding(32)
         }
     }
     
     func cryptUpdatePowerOf(power: Int64, emojiBool: Bool) {
+        // Input validation
+        guard power >= 0 && power <= 100 else {
+            errorMessage = "Invalid power value. Must be between 0 and 100."
+            showError = true
+            return
+        }
+        
         let emojiMap = zip(base64List, emojiList).map { [String($0), String($1)] }
         if emojiBool {
             let crypted = emctothepowerof(power:power, input:toCrypt)
-            let crypt = crypted[crypted.count] as! Array<Any>
-            toDecrypt = (crypt[0] as! Data).base64EncodedString()
-            key = (crypt[1] as! Data).base64EncodedString()
+            guard !crypted.isEmpty else {
+                errorMessage = "Encryption failed"
+                showError = true
+                return
+            }
+            
+            guard crypted.count > 0, let crypt = crypted[crypted.count - 1] as? Array<Any>, crypt.count >= 2,
+                  let encryptedData = crypt[0] as? Data,
+                  let keyData = crypt[1] as? Data else {
+                errorMessage = "Invalid encryption result"
+                showError = true
+                return
+            }
+            
+            toDecrypt = encryptedData.base64EncodedString()
+            key = keyData.base64EncodedString()
+            
             var tempkey  = ""
             for k in key {
                 for emoji in emojiMap.enumerated() {
@@ -91,8 +231,16 @@ struct cryptView: View {
         }
         else {
             let crypted = crypt(input:toCrypt)
-            toDecrypt = (crypted[0] as! Data).base64EncodedString()
-            key = (crypted[1] as! Data).base64EncodedString()
+            guard crypted.count >= 2,
+                  let encryptedData = crypted[0] as? Data,
+                  let keyData = crypted[1] as? Data else {
+                errorMessage = "Encryption failed"
+                showError = true
+                return
+            }
+            
+            toDecrypt = encryptedData.base64EncodedString()
+            key = keyData.base64EncodedString()
         }
     }
     
@@ -100,8 +248,16 @@ struct cryptView: View {
         let emojiMap = zip(base64List, emojiList).map { [String($0), String($1)] }
         if emojiBool {
             let crypted = crypt(input:toCrypt)
-            toDecrypt = (crypted[0] as! Data).base64EncodedString()
-            key = (crypted[1] as! Data).base64EncodedString()
+            guard crypted.count >= 2,
+                  let encryptedData = crypted[0] as? Data,
+                  let keyData = crypted[1] as? Data else {
+                errorMessage = "Encryption failed"
+                showError = true
+                return
+            }
+            
+            toDecrypt = encryptedData.base64EncodedString()
+            key = keyData.base64EncodedString()
             var tempkey  = ""
             for k in key {
                 for emoji in emojiMap.enumerated() {
@@ -123,8 +279,16 @@ struct cryptView: View {
         }
         else {
             let crypted = crypt(input:toCrypt)
-            toDecrypt = (crypted[0] as! Data).base64EncodedString()
-            key = (crypted[1] as! Data).base64EncodedString()
+            guard crypted.count >= 2,
+                  let encryptedData = crypted[0] as? Data,
+                  let keyData = crypted[1] as? Data else {
+                errorMessage = "Encryption failed"
+                showError = true
+                return
+            }
+            
+            toDecrypt = encryptedData.base64EncodedString()
+            key = keyData.base64EncodedString()
         }
     }
     
@@ -148,19 +312,49 @@ struct cryptView: View {
                         }
                     }
                 }
-                let Dcrypted = dcrypt(input: Data(base64Encoded: tempDecrypt)!, key: SymmetricKey(data: Data(base64Encoded: tempkey)!))
+                
+                guard let decodedData = Data(base64Encoded: tempDecrypt),
+                      let decodedKey = Data(base64Encoded: tempkey) else {
+                    errorMessage = "Invalid key or encrypted data format"
+                    showError = true
+                    return
+                }
+                
+                let symmetricKey = SymmetricKey(data: decodedKey)
+                let Dcrypted = dcrypt(input: decodedData, key: symmetricKey)
+                
+                guard !Dcrypted.isEmpty else {
+                    errorMessage = "Decryption failed"
+                    showError = true
+                    return
+                }
+                
                 toCrypt = String(decoding: Dcrypted, as: UTF8.self)
             }
             else {
-                let Dcrypted = dcrypt(input: Data(base64Encoded: toDecrypt)!, key: SymmetricKey(data: Data(base64Encoded: key)!))
+                guard let decodedData = Data(base64Encoded: toDecrypt),
+                      let decodedKey = Data(base64Encoded: key) else {
+                    errorMessage = "Invalid key or encrypted data format"
+                    showError = true
+                    return
+                }
+                
+                let symmetricKey = SymmetricKey(data: decodedKey)
+                let Dcrypted = dcrypt(input: decodedData, key: symmetricKey)
+                
+                guard !Dcrypted.isEmpty else {
+                    errorMessage = "Decryption failed"
+                    showError = true
+                    return
+                }
+                
                 toCrypt = String(decoding: Dcrypted, as: UTF8.self)
             }
         }
     }
 }
 
-struct passwordView: View {
-    
+struct PasswordGeneratorView: View {
     @State private var Length = 20.0
     @State private var Vowels = true
     @State private var Emojis = false
@@ -172,54 +366,229 @@ struct passwordView: View {
     @State private var Other = true
     @State private var Password = ""
     @State private var Extras = ""
+    @State private var errorMessage = ""
+    @State private var showError = false
     
     var body: some View {
         ScrollView {
-        VStack(alignment: .center, spacing: .zero, content: {
-                Link("🦊", destination: URL(string:"https://www.alexdfox.com/")!).font(.system(size: 150.0)).padding(10.0)
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Toggle("Vowels", isOn: $Vowels).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.blue).clipShape(RoundedRectangle(cornerRadius:5))
-                    Toggle("Consonants", isOn: $Consonants).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.gray).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5))
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Toggle("Lowercase", isOn: $Lowercase).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
-                    Toggle("Uppercase", isOn: $Uppercase).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.pink).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5))
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Toggle("Numbers", isOn: $Numbers).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.purple).clipShape(RoundedRectangle(cornerRadius:5))
-                    Toggle("Specials", isOn: $Specials).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5))
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Toggle("Emojis", isOn: $Emojis).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.white).clipShape(RoundedRectangle(cornerRadius:5))
-                    Toggle("Extras", isOn: $Other).accentColor(.orange).foregroundColor(.black).padding(5.0).background(Color.yellow).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5))
-                HStack(alignment: .top, spacing: .some(15.0), content: {
-                    Text("Extras").padding(5.0).foregroundColor(.black).background(Color.yellow)
-                    TextField("Insert Characters", text: $Extras).accentColor(.orange).foregroundColor(.black).padding(5.0).clipShape(RoundedRectangle(cornerRadius:5))
-                }).clipShape(RoundedRectangle(cornerRadius:5)).background(Color.yellow)
-                HStack {
-                    Text("Length").padding(5.0).foregroundColor(.black)
-                    Slider(value: $Length, in: 1...100).accentColor(.orange).foregroundColor(.black).padding(5.0)
-                    Text("\(Length, specifier: "%0.f")").padding(5.0).foregroundColor(.black)
-                }.background(Color.blue).clipShape(RoundedRectangle(cornerRadius:5))
-                Button(action: {update()}, label: {
-                    Text("New Password").accentColor(.orange).foregroundColor(.white).padding(5.0)
-                }).background(Color.red).clipShape(RoundedRectangle(cornerRadius:5))
-                TextField("Password: ", text: $Password).accentColor(.orange).foregroundColor(.blue).padding(5.0).textFieldStyle(RoundedBorderTextFieldStyle()).scaledToFit().background(Color.orange).clipShape(RoundedRectangle(cornerRadius:5))
-        })
+            VStack(spacing: 32) {
+                // Header
+                VStack(spacing: 16) {
+                    HStack {
+                        Image(systemName: "key.fill")
+                            .font(.system(size: 48))
+                            .foregroundColor(.blue)
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Password Generator")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            Text("Create strong, secure passwords instantly")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                    }
+                    .padding(24)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(16)
+                }
+                
+                // Main Content Area
+                HStack(alignment: .top, spacing: 32) {
+                    // Left Column - Controls
+                    VStack(spacing: 24) {
+                        // Password Length Section
+                        VStack(spacing: 16) {
+                            HStack {
+                                Text("Password Length")
+                                    .font(.headline)
+                                Spacer()
+                                Text("\(Int(Length))")
+                                    .font(.headline)
+                                    .foregroundColor(.blue)
+                            }
+                            
+                            Slider(value: $Length, in: 1...100, step: 1)
+                                .accentColor(.blue)
+                        }
+                        .padding(20)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(16)
+                        
+                        // Character Types Section
+                        VStack(spacing: 16) {
+                            Text("Character Types")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            LazyVGrid(columns: [
+                                GridItem(.flexible()),
+                                GridItem(.flexible())
+                            ], spacing: 16) {
+                                ToggleOption(title: "Vowels", isOn: $Vowels, icon: "a.circle.fill", color: .blue)
+                                ToggleOption(title: "Consonants", isOn: $Consonants, icon: "b.circle.fill", color: .green)
+                                ToggleOption(title: "Numbers", isOn: $Numbers, icon: "number.circle.fill", color: .orange)
+                                ToggleOption(title: "Special Characters", isOn: $Specials, icon: "exclamationmark.circle.fill", color: .red)
+                                ToggleOption(title: "Uppercase", isOn: $Uppercase, icon: "textformat.abc", color: .purple)
+                                ToggleOption(title: "Lowercase", isOn: $Lowercase, icon: "textformat.abc.dottedunderline", color: .pink)
+                                ToggleOption(title: "Emojis", isOn: $Emojis, icon: "face.smiling", color: .yellow)
+                                ToggleOption(title: "Custom Characters", isOn: $Other, icon: "plus.circle.fill", color: .gray)
+                            }
+                        }
+                        
+                        // Custom Characters Section
+                        if Other {
+                            VStack(spacing: 16) {
+                                Text("Custom Characters")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                TextField("Enter custom characters (optional)", text: $Extras)
+                                    .textFieldStyle(.roundedBorder)
+                            }
+                        }
+                        
+                        // Generate Button
+                        Button(action: { update() }) {
+                            HStack {
+                                Image(systemName: "wand.and.stars")
+                                Text("Generate Password")
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(16)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .font(.headline)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    
+                    // Right Column - Generated Password
+                    VStack(spacing: 24) {
+                        // Generated Password Section
+                        VStack(spacing: 16) {
+                            Text("Generated Password")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            VStack(spacing: 12) {
+                                Text(Password.isEmpty ? "Your password will appear here" : Password)
+                                    .font(.system(.body, design: .monospaced))
+                                    .foregroundColor(Password.isEmpty ? .secondary : .primary)
+                                    .padding(20)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(12)
+                                    .frame(minHeight: 80)
+                                
+                                if !Password.isEmpty {
+                                    HStack {
+                                        Spacer()
+                                        Button(action: {
+                                            #if os(iOS)
+                                                UIPasteboard.general.string = Password
+                                            #elseif os(macOS)
+                                                NSPasteboard.general.setString(Password, forType: .string)
+                                            #endif
+                                        }) {
+                                            HStack {
+                                                Image(systemName: "doc.on.doc")
+                                                Text("Copy to Clipboard")
+                                            }
+                                            .padding(12)
+                                            .background(Color.blue)
+                                            .foregroundColor(.white)
+                                            .cornerRadius(8)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                
+                // Error Display
+                if showError {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.orange)
+                        Text(errorMessage)
+                            .foregroundColor(.primary)
+                        Spacer()
+                    }
+                    .padding(16)
+                    .background(Color.orange.opacity(0.1))
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.orange, lineWidth: 1)
+                    )
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            showError = false
+                        }
+                    }
+                }
+                
+                Spacer(minLength: 40)
+            }
+            .padding(32)
         }
-        
-        
     }
     
     func update() {
-        let pass = password(length: Int(Length), specialChars: Specials,vowelChars: Vowels, constChars: Consonants, numChars: Numbers, upperOnly: Uppercase, lowerOnly: Lowercase, extra: Other, Extras: Extras, emoji: Emojis)
-        Password = pass
+        // Input validation
+        guard Length >= 1 && Length <= 100 else {
+            errorMessage = "Password length must be between 1 and 100"
+            showError = true
+            return
+        }
         
-        #if os(iOS)
-            UIPasteboard.general.string = Password
-        #elseif os(macOS)
-            NSPasteboard.general.setString(Password, forType: .string)
-        #endif
+        // Validate that at least one character type is selected
+        guard Vowels || Consonants || Numbers || Lowercase || Uppercase || Specials || Emojis || Other else {
+            errorMessage = "Please select at least one character type"
+            showError = true
+            return
+        }
+        
+        let pass = password(length: Int(Length), specialChars: Specials,vowelChars: Vowels, constChars: Consonants, numChars: Numbers, upperOnly: Uppercase, lowerOnly: Lowercase, extra: Other, Extras: Extras, emoji: Emojis)
+        
+        guard !pass.isEmpty else {
+            errorMessage = "Failed to generate password"
+            showError = true
+            return
+        }
+        
+        Password = pass
+    }
+}
+
+struct ToggleOption: View {
+    let title: String
+    @Binding var isOn: Bool
+    let icon: String
+    let color: Color
+    
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(color)
+                .frame(width: 24)
+            
+            Text(title)
+                .font(.subheadline)
+            
+            Spacer()
+            
+            Toggle("", isOn: $isOn)
+                .toggleStyle(SwitchToggleStyle(tint: color))
+        }
+        .padding(16)
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(12)
     }
 }

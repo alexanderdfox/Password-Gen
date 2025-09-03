@@ -9,10 +9,11 @@
 import SwiftUI
 
 @main
-struct SwiftyFoxPasswordWatchOS_Watch_AppApp: App {
+struct SwiftyFoxPasswordWatchOSApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(.light)
         }
     }
 }
