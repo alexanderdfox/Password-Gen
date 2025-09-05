@@ -129,10 +129,35 @@ struct CryptographyView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        TextField("Encrypted output will appear here", text: $toDecrypt)
-                            .textFieldStyle(.roundedBorder)
-                            .disabled(true)
-                            .frame(minHeight: 100)
+                        VStack(spacing: 12) {
+                            TextField("Encrypted output will appear here", text: $toDecrypt)
+                                .textFieldStyle(.roundedBorder)
+                                .disabled(true)
+                                .frame(minHeight: 100)
+                            
+                            if !toDecrypt.isEmpty {
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        #if os(iOS)
+                                            UIPasteboard.general.string = toDecrypt
+                                        #elseif os(macOS)
+                                            NSPasteboard.general.setString(toDecrypt, forType: .string)
+                                        #endif
+                                    }) {
+                                        HStack {
+                                            Image(systemName: "doc.on.doc")
+                                            Text("Copy Encrypted Message")
+                                        }
+                                        .padding(12)
+                                        .background(Color.blue)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            }
+                        }
                     }
                     
                     // Key Section
@@ -141,9 +166,34 @@ struct CryptographyView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        TextField("Key will be generated automatically", text: $key)
-                            .textFieldStyle(.roundedBorder)
-                            .disabled(true)
+                        VStack(spacing: 12) {
+                            TextField("Key will be generated automatically", text: $key)
+                                .textFieldStyle(.roundedBorder)
+                                .disabled(true)
+                            
+                            if !key.isEmpty {
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        #if os(iOS)
+                                            UIPasteboard.general.string = key
+                                        #elseif os(macOS)
+                                            NSPasteboard.general.setString(key, forType: .string)
+                                        #endif
+                                    }) {
+                                        HStack {
+                                            Image(systemName: "doc.on.doc")
+                                            Text("Copy Encryption Key")
+                                        }
+                                        .padding(12)
+                                        .background(Color.green)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            }
+                        }
                     }
                 }
                 #else
@@ -211,10 +261,35 @@ struct CryptographyView: View {
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            TextField("Encrypted output will appear here", text: $toDecrypt)
-                                .textFieldStyle(.roundedBorder)
-                                .disabled(true)
-                                .frame(minHeight: 100)
+                            VStack(spacing: 12) {
+                                TextField("Encrypted output will appear here", text: $toDecrypt)
+                                    .textFieldStyle(.roundedBorder)
+                                    .disabled(true)
+                                    .frame(minHeight: 100)
+                                
+                                if !toDecrypt.isEmpty {
+                                    HStack {
+                                        Spacer()
+                                        Button(action: {
+                                            #if os(iOS)
+                                                UIPasteboard.general.string = toDecrypt
+                                            #elseif os(macOS)
+                                                NSPasteboard.general.setString(toDecrypt, forType: .string)
+                                            #endif
+                                        }) {
+                                            HStack {
+                                                Image(systemName: "doc.on.doc")
+                                                Text("Copy Encrypted Message")
+                                            }
+                                            .padding(12)
+                                            .background(Color.blue)
+                                            .foregroundColor(.white)
+                                            .cornerRadius(8)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                            }
                         }
                         
                         // Key Section
@@ -223,9 +298,34 @@ struct CryptographyView: View {
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            TextField("Key will be generated automatically", text: $key)
-                                .textFieldStyle(.roundedBorder)
-                                .disabled(true)
+                            VStack(spacing: 12) {
+                                TextField("Key will be generated automatically", text: $key)
+                                    .textFieldStyle(.roundedBorder)
+                                    .disabled(true)
+                                
+                                if !key.isEmpty {
+                                    HStack {
+                                        Spacer()
+                                        Button(action: {
+                                            #if os(iOS)
+                                                UIPasteboard.general.string = key
+                                            #elseif os(macOS)
+                                                NSPasteboard.general.setString(key, forType: .string)
+                                            #endif
+                                        }) {
+                                            HStack {
+                                                Image(systemName: "doc.on.doc")
+                                                Text("Copy Encryption Key")
+                                            }
+                                            .padding(12)
+                                            .background(Color.green)
+                                            .foregroundColor(.white)
+                                            .cornerRadius(8)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity)
