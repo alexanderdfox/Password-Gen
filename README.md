@@ -26,6 +26,22 @@ A professional, secure password generator and encryption tool built with SwiftUI
 - **Easy Decryption**: Simple decryption with generated keys
 - **Input Validation**: Comprehensive validation prevents errors
 
+## 📸 Screenshots
+
+### iPad
+![iPad - Password Generator](Screenshots/iPad%20-%20Password.png)
+*Password Generator interface on iPad*
+
+![iPad - Encryption Tool](Screenshots/iPad%20-%20Encryption.png)
+*Encryption tool interface on iPad*
+
+### macOS
+![macOS - Password Generator](Screenshots/macOS%20-%20Password.png)
+*macOS Password Generator with two-column layout*
+
+![macOS - Encryption Tool](Screenshots/macOS%20-%20Encryption.png)
+*macOS Encryption tool with professional desktop interface*
+
 ## 🛡️ Security Features
 
 - **Cryptographically Secure Random Generation**: Replaced deprecated `arc4random()` with `SecRandomCopyBytes()`
